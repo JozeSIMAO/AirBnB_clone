@@ -21,7 +21,7 @@ class BaseModel:
     """
     def __init__(self, *args, **kwargs):
         """Initialize a new BaseModel object with unique ID and timestamps."""
-        timeformat = '%Y-%m-%dT%H:%M:%S.%f'
+        timeformat = '%Y-%m-%dT%H:%M:%S.%f'  #Much better way of writing this!
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -35,7 +35,7 @@ class BaseModel:
 
     def __str__(self):
         """
-        Returns a string representation ofo the object
+        Returns a string representation of the object
 
         Returns:
             str: A string representation of the object in a specific format
