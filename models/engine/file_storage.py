@@ -2,7 +2,7 @@
 """Defines a class FileStorage that serializes and deserializes JSON file to instances"""
 #Step 1:  We need JSON. So we must import it
 import json
-
+from models.base_model import BaseModel
 #Step 2: We can now start building our Class FileStorage
 #Note that the Class as Class Attributes! unlike BaseModel Class
 #Note that the class attributes are PRIVATE, so they need a __ at the beginning of the name
