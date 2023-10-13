@@ -3,7 +3,6 @@
 
 import cmd
 from models.base_model import BaseModel
-from models import storage
 from models.engine.file_storage import FileStorage
 
 class HBNBCommand(cmd.Cmd):
@@ -53,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             class_name = args[0] # Give first word in args to class_name variable
             instance_id = args[1] #Now we assign the second word in args
             file_storage = FileStorage()
-            instance = storage.all().get(f"{class_name}.{instance_id}") #Uses storage to find class_name or instance_id and stores it in instance variable
+            instance = file_storage.all().get(f"{class_name}.{instance_id}") #Uses storage to find class_name or instance_id and stores it in instance variable
             if instance:
                 print(instance)
             else:
