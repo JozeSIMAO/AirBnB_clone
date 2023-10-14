@@ -4,10 +4,16 @@
 import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """Represents the the HBNBCommand class"""
     prompt = '(hbnb) '
+
+    __classes = {
+        "BaseModel" : BaseModel,
+        "User" : User,
+    }
     
     def do_quit(self, arg):
         """Exits the program if (quit) is input"""
@@ -22,19 +28,27 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it, and prints the id"""
+        """Creates a new instance of a class, saves it, and prints the id"""
         
         if not arg: #Checks if arg parameter is empty.
             print("** class name missing **") #if args is empty, then prints class name missing
-        elif arg != "BaseModel":
+        elif arg not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
             file_storage = FileStorage()
-            new_instance = BaseModel() #creating a new class object
+            new_instance = HBNBCommand.__classes[arg]() #creating a new class object
             print(new_instance.id) #Prints id data of object to console.py
             file_storage.new(new_instance) #add the new instance to the storage system
             file_storage.save() #Use already defined Save method o this new object
             
+
+
+
+
+
+
+
+
     
     def do_show(self, arg):
         """Prints the string representation of an instance"""
@@ -43,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
         if not args: #Checks if arg parameter is empty.
             print("** class name missing **") #if args is empty, then prints class name missing
             return
-        elif args[0] != "BaseModel":
+        elif args[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -58,6 +72,22 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
     
+
+# Check the change i made to show (By importing User) and how its causing the console to crash please 
+
+#Need show to process more than one class, i tried using HBNBCommand.__classes as i did in create, but im stuggling to get show to work
+
+#Still need to make changes for destroy, update and all 
+
+
+
+
+
+
+
+
+
+
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         if not arg:
