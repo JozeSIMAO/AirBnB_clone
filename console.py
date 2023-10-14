@@ -95,13 +95,16 @@ class HBNBCommand(cmd.Cmd):
             print([str(instance) for instance in file_storage.all().values()]) #We use str() to turn the ibject instance into a printable string
         elif args:
             class_name = args[0]
-            if class_name not in file_storage.classes: #If class name and ID does not exist
-                print("** class doesn't exist **")
-            elif class_name in instances:  # This check if the class name exists in the storage
+            if class_name in file_storage.classes: #If class name and ID does exist
                 object_list = [str(instance) for instance in instances.values() if instance.__class__.__name__ == class_name]
-                print(object_list)
-                
-                
+                if object_list:
+                    print(object_list)
+                else:
+                    print("[]")
+            else:
+                print("** class doesn't exist **")
+            
+      
     def do_update(self, arg):
         """Updates an instance's attribute"""
         file_storage = FileStorage()
