@@ -84,17 +84,22 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """Prints all string representations of instances"""
         file_storage = FileStorage()
+        file_storage.classes = {
+            "BaseModel": BaseModel,
+        }
+        file_storage.reload() #Loads data from file storage
         instances = file_storage.all()
         args = arg.split() #Splits the argument into a list of words
+
         if not arg:  # This checks if the argument is empty, and if so, print all instances
             print([str(instance) for instance in file_storage.all().values()]) #We use str() to turn the ibject instance into a printable string
         elif args:
             class_name = args[0]
-            if class_name not in instances: #If class name and ID does not exist
+            if class_name not in file_storage.classes: #If class name and ID does not exist
                 print("** class doesn't exist **")
             elif class_name in instances:  # This check if the class name exists in the storage
-                for instance in instances.values():
-                    print(str(instance))
+                object_list = [str(instance) for instance in instances.values() if instance.__class__.__name__ == class_name]
+                print(object_list)
                 
                 
     def do_update(self, arg):
