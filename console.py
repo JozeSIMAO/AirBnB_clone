@@ -5,6 +5,11 @@ import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 class HBNBCommand(cmd.Cmd):
     """Represents the the HBNBCommand class"""
@@ -13,6 +18,11 @@ class HBNBCommand(cmd.Cmd):
     __classes = {
         "BaseModel": BaseModel,
         "User": User,
+        "State": State,
+        "Place": Place,
+        "Amenity": Amenity,
+        "City": City,
+        "Review": Review
     }
     
     def do_quit(self, arg):
@@ -40,15 +50,6 @@ class HBNBCommand(cmd.Cmd):
             print(new_instance.id) #Prints id data of object to console.py
             file_storage.new(new_instance) #add the new instance to the storage system
             file_storage.save() #Use already defined Save method o this new object
-            
-
-
-
-
-
-
-
-
     
     def do_show(self, arg):
         """Prints the string representation of an instance"""
@@ -71,22 +72,6 @@ class HBNBCommand(cmd.Cmd):
                 print(instance)
             else:
                 print("** no instance found **")
-    
-
-# Check the change i made to show (By importing User) and how its causing the console to crash please 
-
-#Need show to process more than one class, i tried using HBNBCommand.__classes as i did in create, but im stuggling to get show to work
-
-#Still need to make changes for destroy, update and all 
-
-
-
-
-
-
-
-
-
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
@@ -98,13 +83,17 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         file_storage = FileStorage()
         
+        if class_name not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+            return
         if len(args) < 2:
             print("** instance id missing **")
-        else:
-            instance_id = args[1]
-            instances = file_storage.all()
-            key = f"{class_name}.{instance_id}"
+            return
         
+        instance_id = args[1]
+        instances = file_storage.all()
+        key = f"{class_name}.{instance_id}"
+            
         if key in instances:
             del instances[key]
             file_storage.save()
@@ -116,6 +105,7 @@ class HBNBCommand(cmd.Cmd):
         file_storage = FileStorage()
         file_storage.classes = {
             "BaseModel": BaseModel,
+            "User": User, #added the User
         }
         file_storage.reload() #Loads data from file storage
         instances = file_storage.all()
