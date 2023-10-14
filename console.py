@@ -105,48 +105,32 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             
       
-def do_update(self, arg):
-    """Updates an instance's attribute"""
-    file_storage = FileStorage()
-    
-    if not arg:  # If instance is not in arg
-        print("** class name missing **")
-    else:
-        args = arg.split()  # Splits the argument into a list of words
-        if len(args) < 2:  # This checks if the argument contains a class name and an instance id.
-            print("** instance id missing **")
+    def do_update(self, arg):
+        """Updates an instance's attribute"""
+        file_storage = FileStorage()
+        
+        if not arg: #If instance is not in arg
+            print("** class name missing **")
         else:
-            class_name = args[0]
-            instance_id = args[1]
-            if f"{class_name}.{instance_id}" not in file_storage.all():
+            args = arg.split() #Splits the argument into a list of words
+            class_name = args[0] #Give first word in args variable name class_name
+            if len(args) < 2:    #This checks if the argument contains a class name and an instance id. Use Len() to filter condition
+                print("** instance id missing **")
+            elif f"{class_name}.{instance_id}" not in file_storage.all():
                 print("** no instance found **")
             elif len(args) < 3:
                 print("** attribute name missing **")
             elif len(args) < 4:
                 print("** value missing **")
             else:
+                instance_id = args[1]
                 attr_name = args[2]
                 attr_value = args[3]
-                instance = file_storage.all().get(f"{class_name}.{instance_id}")
-
-                if instance:
-                    # Check if the attribute exists in the instance and cast the value to the attribute type
-                    if hasattr(instance, attr_name):
-                        attr_type = type(getattr(instance, attr_name))
-                        if attr_type == str:
-                            setattr(instance, attr_name, str(attr_value))
-                        elif attr_type == int:
-                            setattr(instance, attr_name, int(attr_value))
-                        elif attr_type == float:
-                            setattr(instance, attr_name, float(attr_value))
-                        else:
-                            print("** Invalid attribute type. Only string, integer, and float attributes can be updated. **")
-                            return
-                        instance.save()
-                    else:
-                        print("** Invalid attribute name. Attribute doesn't exist for this model. **")
-                else:
-                    print("** no instance found **")
+                instance = file_storage.all().get(f"{class_name}.{instance_id}")#We can now get the instance from storage
+                
+                if instance:#Finally, we can set the attribute value and save the instance
+                    setattr(instance, attr_name, attr_value)
+                    instance.save()
 
 
 if __name__ == '__main__':
