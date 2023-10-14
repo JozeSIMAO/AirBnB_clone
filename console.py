@@ -105,7 +105,11 @@ class HBNBCommand(cmd.Cmd):
         file_storage = FileStorage()
         file_storage.classes = {
             "BaseModel": BaseModel,
-            "User": User, #added the User
+            "User": User,
+            "Place": Place,
+            "Review": Review,
+            "State": State,
+            "Amenity": Amenity,
         }
         file_storage.reload() #Loads data from file storage
         instances = file_storage.all()
