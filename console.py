@@ -131,12 +131,13 @@ class HBNBCommand(cmd.Cmd):
       
     def do_update(self, arg):
         """Updates an instance's attribute"""
+        args = arg.split() #splits arguments into a list
         file_storage = FileStorage()
+        instance_id = args[1]
         
         if not arg: #If instance is not in arg
             print("** class name missing **")
         else:
-            args = arg.split() #Splits the argument into a list of words
             class_name = args[0] #Give first word in args variable name class_name
             if len(args) < 2:    #This checks if the argument contains a class name and an instance id. Use Len() to filter condition
                 print("** instance id missing **")
