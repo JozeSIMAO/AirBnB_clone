@@ -28,7 +28,7 @@ class FileStorage:
         self.__objects[key] = obj
 
     def all(self):
-        """returns the dictionary __objects"""
+        """returns the dictionary __objects containing all stored objects"""
         return self.__objects
     
     def save(self):
@@ -38,7 +38,7 @@ class FileStorage:
             json.dump(sterObj, file)
     
     def reload(self):
-        """deserializes the JSON file to __objects (only if the JSON file (__file_path) exists"""
+        """deserializes the JSON file to __objects (if the JSON file (__file_path) exists"""
         try:
             with open(FileStorage.__file_path) as f:
                 sterObj = json.load(f)

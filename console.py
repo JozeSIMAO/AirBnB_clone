@@ -40,34 +40,34 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """Creates a new instance of a class, saves it, and prints the id"""
         
-        if not arg: #Checks if arg parameter is empty.
-            print("** class name missing **") #if args is empty, then prints class name missing
+        if not arg:
+            print("** class name missing **")
         elif arg not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
             file_storage = FileStorage()
-            new_instance = HBNBCommand.__classes[arg]() #creating a new class object
-            print(new_instance.id) #Prints id data of object to console.py
-            file_storage.new(new_instance) #add the new instance to the storage system
-            file_storage.save() #Use already defined Save method o this new object
+            new_instance = HBNBCommand.__classes[arg]()
+            print(new_instance.id)
+            file_storage.new(new_instance)
+            file_storage.save()
     
     def do_show(self, arg):
         """Prints the string representation of an instance"""
         args = arg.split()
         
-        if not args: #Checks if arg parameter is empty.
-            print("** class name missing **") #if args is empty, then prints class name missing
+        if not args:
+            print("** class name missing **")
             return
         elif args[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
         else:
-            #Again we use split() to split args string into list of words and store the result in args
-            class_name = args[0] # Give first word in args to class_name variable
-            instance_id = args[1] #Now we assign the second word in args
+            
+            class_name = args[0]
+            instance_id = args[1]
             file_storage = FileStorage()
-            instance = file_storage.all().get(f"{class_name}.{instance_id}") #Uses storage to find class_name or instance_id and stores it in instance variable
+            instance = file_storage.all().get(f"{class_name}.{instance_id}")
             if instance:
                 print(instance)
             else:
@@ -111,15 +111,15 @@ class HBNBCommand(cmd.Cmd):
             "State": State,
             "Amenity": Amenity,
         }
-        file_storage.reload() #Loads data from file storage
+        file_storage.reload()
         instances = file_storage.all()
-        args = arg.split() #Splits the argument into a list of words
+        args = arg.split()
 
-        if not arg:  # This checks if the argument is empty, and if so, print all instances
-            print([str(instance) for instance in file_storage.all().values()]) #We use str() to turn the ibject instance into a printable string
+        if not arg:
+            print([str(instance) for instance in file_storage.all().values()])
         elif args:
             class_name = args[0]
-            if class_name in file_storage.classes: #If class name and ID does exist
+            if class_name in file_storage.classes:
                 object_list = [str(instance) for instance in instances.values() if instance.__class__.__name__ == class_name]
                 if object_list:
                     print(object_list)
@@ -131,15 +131,15 @@ class HBNBCommand(cmd.Cmd):
       
     def do_update(self, arg):
         """Updates an instance's attribute"""
-        args = arg.split() #splits arguments into a list
+        args = arg.split()
         file_storage = FileStorage()
         instance_id = args[1]
         
-        if not arg: #If instance is not in arg
+        if not arg:
             print("** class name missing **")
         else:
-            class_name = args[0] #Give first word in args variable name class_name
-            if len(args) < 2:    #This checks if the argument contains a class name and an instance id. Use Len() to filter condition
+            class_name = args[0]
+            if len(args) < 2:
                 print("** instance id missing **")
             elif f"{class_name}.{instance_id}" not in file_storage.all():
                 print("** no instance found **")
@@ -151,9 +151,9 @@ class HBNBCommand(cmd.Cmd):
                 instance_id = args[1]
                 attr_name = args[2]
                 attr_value = args[3]
-                instance = file_storage.all().get(f"{class_name}.{instance_id}")#We can now get the instance from storage
+                instance = file_storage.all().get(f"{class_name}.{instance_id}")
                 
-                if instance:#Finally, we can set the attribute value and save the instance
+                if instance:
                     setattr(instance, attr_name, attr_value)
                     instance.save()
 

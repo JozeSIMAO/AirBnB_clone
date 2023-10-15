@@ -19,7 +19,13 @@ class BaseModel:
     - __str__(): Returns a str representation of the obj in a specific format.
     """
     def __init__(self, *args, **kwargs):
-        """Initialize a new BaseModel object with unique ID and timestamps."""
+        """
+        Initialize a new BaseModel object with unique ID and timestamps.
+        
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments for object initialization.
+        """
         timeformat = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
@@ -45,7 +51,9 @@ class BaseModel:
         return "[{}] ({}) {}".format(classname, self.id, self.__dict__)
 
     def save(self):
-        """Update the 'updated_at' timestamp to the current time."""
+        """
+        Update the 'updated_at' timestamp to the current time and save the object.
+        """
         self.updated_at = datetime.now()
         models.storage.save()
 
