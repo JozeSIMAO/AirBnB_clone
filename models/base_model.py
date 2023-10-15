@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """Defines a class BaseModel"""
-
 import models
 import uuid
 from datetime import datetime
+
 
 class BaseModel:
     """
@@ -21,7 +21,7 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """
         Initialize a new BaseModel object with unique ID and timestamps.
-        
+
         Args:
             *args: Variable length argument list.
             **kwargs: Arbitrary keyword arguments for object initialization.
@@ -30,7 +30,7 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = self.created_at
-        
+
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -52,7 +52,8 @@ class BaseModel:
 
     def save(self):
         """
-        Update the 'updated_at' timestamp to the current time and save the object.
+        Update the 'updated_at' timestamp to the current time and
+        save the object.
         """
         self.updated_at = datetime.now()
         models.storage.save()

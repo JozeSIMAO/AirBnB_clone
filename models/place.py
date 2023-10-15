@@ -1,12 +1,11 @@
 #!/usr/bin/python3
 """Defines a class Place that inherits from BaseModel"""
-
-
 from models.base_model import BaseModel
+
 
 class Place(BaseModel):
     """Represents the Place
-    
+
     Attribute:
         city_id (str): City's ID
         user_id (str): User's ID
@@ -20,8 +19,8 @@ class Place(BaseModel):
         longitude (float): longitude of place
         amenity_ids (list): list of amenity ID's
     """
-    
-    city_id =""
+
+    city_id = ""
     user_id = ""
     name = ""
     description = ""
