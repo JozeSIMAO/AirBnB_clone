@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Defines a class HBNBCommand, entry point of the command interpreter"""
-
 import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
@@ -10,6 +9,7 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
+
 
 class HBNBCommand(cmd.Cmd):
     """Represents the the HBNBCommand class"""
@@ -24,22 +24,22 @@ class HBNBCommand(cmd.Cmd):
         "City": City,
         "Review": Review
     }
-    
+
     def do_quit(self, arg):
         """Exits the program if (quit) is input"""
         return True
-    
+
     def do_EOF(self, arg):
         """Exits the program if (EOF) is input"""
         return True
-    
+
     def emptyline(self):
         """Does nothing"""
         pass
 
     def do_create(self, arg):
         """Creates a new instance of a class, saves it, and prints the id"""
-        
+
         if not arg:
             print("** class name missing **")
         elif arg not in HBNBCommand.__classes:
@@ -50,11 +50,11 @@ class HBNBCommand(cmd.Cmd):
             print(new_instance.id)
             file_storage.new(new_instance)
             file_storage.save()
-    
+
     def do_show(self, arg):
         """Prints the string representation of an instance"""
         args = arg.split()
-        
+
         if not args:
             print("** class name missing **")
             return
@@ -63,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
         else:
-            
+
             class_name = args[0]
             instance_id = args[1]
             file_storage = FileStorage()
@@ -78,28 +78,28 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("**class name missing **")
             return
-        
+
         args = arg.split()
         class_name = args[0]
         file_storage = FileStorage()
-        
+
         if class_name not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
             print("** instance id missing **")
             return
-        
+
         instance_id = args[1]
         instances = file_storage.all()
         key = f"{class_name}.{instance_id}"
-            
+
         if key in instances:
             del instances[key]
             file_storage.save()
         else:
             print("** no instance found **")
-    
+
     def do_all(self, arg):
         """Prints all string representations of instances"""
         file_storage = FileStorage()
@@ -120,21 +120,21 @@ class HBNBCommand(cmd.Cmd):
         elif args:
             class_name = args[0]
             if class_name in file_storage.classes:
-                object_list = [str(instance) for instance in instances.values() if instance.__class__.__name__ == class_name]
+                object_list = [str(instance) for instance in instances.values()
+                               if instance.__class__.__name__ == class_name]
                 if object_list:
                     print(object_list)
                 else:
                     print("[]")
             else:
                 print("** class doesn't exist **")
-            
-      
+
     def do_update(self, arg):
         """Updates an instance's attribute"""
         args = arg.split()
         file_storage = FileStorage()
         instance_id = args[1]
-        
+
         if not arg:
             print("** class name missing **")
         else:
@@ -148,11 +148,11 @@ class HBNBCommand(cmd.Cmd):
             elif len(args) < 4:
                 print("** value missing **")
             else:
-                instance_id = args[1]
+                instnce_id = args[1]
                 attr_name = args[2]
                 attr_value = args[3]
-                instance = file_storage.all().get(f"{class_name}.{instance_id}")
-                
+                instance = file_storage.all().get(f"{class_name}.{instnce_id}")
+
                 if instance:
                     setattr(instance, attr_name, attr_value)
                     instance.save()
