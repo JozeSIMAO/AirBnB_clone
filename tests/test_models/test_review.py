@@ -2,6 +2,7 @@
 import unittest
 from models.review import Review
 
+
 class TestReview(unittest.TestCase):
     def test_attributes(self):
         review = Review()
@@ -14,6 +15,7 @@ class TestReview(unittest.TestCase):
         self.assertIsInstance(review.place_id, str)
         self.assertIsInstance(review.user_id, str)
         self.assertIsInstance(review.text, str)
+
 
 if __name__ == '__main__':
     unittest.main()

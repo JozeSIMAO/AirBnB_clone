@@ -2,6 +2,7 @@
 import unittest
 from models.place import Place
 
+
 class TestPlace(unittest.TestCase):
     def test_attributes(self):
         place = Place()
@@ -31,6 +32,6 @@ class TestPlace(unittest.TestCase):
         self.assertIsInstance(place.longitude, float)
         self.assertIsInstance(place.amenity_ids, list)
 
-    
+
 if __name__ == '__main__':
     unittest.main()

@@ -2,6 +2,7 @@
 import unittest
 from models.base_model import BaseModel
 
+
 class TestBaseModel(unittest.TestCase):
 
     def test_instance_creation(self):
@@ -27,8 +28,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(model_dict['__class__'], 'BaseModel')
         self.assertIsInstance(model_dict['created_at'], str)
         self.assertIsInstance(model_dict['updated_at'], str)
-        self.assertEqual(model_dict['created_at'], model.created_at.isoformat())
-        self.assertEqual(model_dict['updated_at'], model.updated_at.isoformat())
+        self.assertEqual(model_dict['created_at'],
+                         model.created_at.isoformat())
+        self.assertEqual(model_dict['updated_at'],
+                         model.updated_at.isoformat())
 
     def test_save_method(self):
         model = BaseModel()
@@ -36,6 +39,7 @@ class TestBaseModel(unittest.TestCase):
         model.save()
         new_updated_at = model.updated_at
         self.assertNotEqual(original_updated_at, new_updated_at)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import unittest
 import os
 from models.base_model import BaseModel
@@ -8,6 +9,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.engine.file_storage import FileStorage
+
 
 class TestFileStorage(unittest.TestCase):
     def setUp(self):
@@ -54,6 +56,7 @@ class TestFileStorage(unittest.TestCase):
             os.remove(filename)
         except FileNotFoundError:
             pass
+
 
 if __name__ == '__main__':
     unittest.main()
