@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""Defines a class FileStorage that serializes and deserializes JSON file to instances"""
-
-
+"""Defines class FileStorage[serializes/deserializes JSON file to instances]"""
 import json
 from models.base_model import BaseModel
 from models.user import User
@@ -11,12 +9,15 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 
+
 class FileStorage:
-    """class FileStorage that serializes instances to a JSON file and deserializes JSON file to instances
-    
+    """class FileStorage that serializes instances to a JSON file and
+    deserializes JSON file to instances
+
     Attributes:
         __file_path (str): string - path to the JSON file
-        __objects (dict): dictionary - empty but will store all objects by <class name>.id
+        __objects (dict): dictionary - empty but will store
+        all objects by <class name>.id
     """
 
     __file_path = "file.json"
@@ -30,15 +31,17 @@ class FileStorage:
     def all(self):
         """returns the dictionary __objects containing all stored objects"""
         return self.__objects
-    
+
     def save(self):
         """serializes __objects to the JSON file(path: __filepath)"""
         sterObj = {key: obj.to_dict() for key, obj in self.__objects.items()}
         with open(self.__file_path, 'w') as file:
             json.dump(sterObj, file)
-    
+
     def reload(self):
-        """deserializes the JSON file to __objects (if the JSON file (__file_path) exists"""
+        """deserializes the JSON file to __objects
+        (if the JSON file (__file_path) exists
+        """
         try:
             with open(FileStorage.__file_path) as f:
                 sterObj = json.load(f)
