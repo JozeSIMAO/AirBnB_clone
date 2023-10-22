@@ -28,11 +28,19 @@
 
 .locations {
     border-right: 1px solid #DDDDDD;
+    text-align: left;
+    float: left;
 }
 
 .locations, .amenities {
     height: 100%;
     width: 25%;
+}
+
+.amenities {
+    align-content: flex-start;
+    text-align: left;
+    float: left;
 }
 
 .locations:hover, .amenities:hover {
@@ -41,11 +49,18 @@
 
 .locations h3, .amenities h3 {
     font-weight: 600;
+    margin: 0px;
+    margin-top: 17px;
+    padding: 0px;
+    padding-left: 30px;
 }
 
 .locations h4, .amenities h4 {
-    font-weight: 400;
     font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+    font-weight: 400;
+    padding-left: 30px;
 }
 
 .locations:hover .menu,
@@ -56,38 +71,35 @@
 .popover{
     visibility: hidden;
     position: relative;
-    background-color: #FAFAFA;
+    z-index: 1;
     border: solid #DDDDDD 1px;
     border-radius: 4px;
-    margin-top: 7%;
+    background-color: #FAFAFA;
     padding-bottom: 10%;
-    z-index: 1;
+    margin-top: 7%;
 }
 
 .popover li h2{
     padding: 0;
     margin: 0;
 }
+
 .popList{
     padding:0px;
     margin:0px;
     padding-left: 10%;
-    align-items: center;
 }
+
 .popover li {
     list-style-type: none;
     padding-bottom: 5%;
 }
-.poppover ul{
-    padding-top: 30px;
-}
+
 .locations:hover >.popover{
     visibility: visible;
     margin-bottom: 50px;
-    padding-left: 10px;
 }
 
 .amenities:hover > .popover{
     visibility: visible;
-    padding-left: 10px;
 }
