@@ -3,6 +3,10 @@
 import models
 import uuid
 from datetime import datetime
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
 class BaseModel:
@@ -18,6 +22,10 @@ class BaseModel:
     - to_dict(): Converts the object to a dictionary with specific formatting.
     - __str__(): Returns a str representation of the obj in a specific format.
     """
+    id = Column(String(60), nullable=False, primary_key=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+
     def __init__(self, *args, **kwargs):
         """
         Initialize a new BaseModel object with unique ID and timestamps.

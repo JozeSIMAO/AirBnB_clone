@@ -28,8 +28,10 @@ class FileStorage:
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.__objects[key] = obj
 
-    def all(self):
+    def all(self, cls=None):
         """returns the dictionary __objects containing all stored objects"""
+        if cls is not None:
+            return {k: v for k, v in self.__objects.items() if isinstance(v, cls)}
         return self.__objects
 
     def save(self):
@@ -51,3 +53,10 @@ class FileStorage:
                     self.new(eval(class_name)(**value))
         except FileNotFoundError:
             return
+
+    def delete(self ,obj=None):
+        if obj is None:
+            return
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        if key in self.__objects:
+            del self.__objects[key]

@@ -3,6 +3,7 @@
 import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
 from models.user import User
 from models.amenity import Amenity
 from models.city import City
@@ -25,6 +26,10 @@ class HBNBCommand(cmd.Cmd):
         "Review": Review
     }
 
+    def __init__(self):
+        super().__init__()
+        self.file_storage = FileStorage()
+
     def do_quit(self, arg):
         """Exits the program if (quit) is input"""
         return True
@@ -39,14 +44,38 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of a class, saves it, and prints the id"""
+        # Split the input string using shlex for proper handling of quotes
+        args = arg.split()
 
-        if not arg:
+        if not args:
             print("** class name missing **")
-        elif arg not in HBNBCommand.__classes:
+        elif args[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
+            class_name = args[0]
+            params = {}
+
+            i = 1
+            while i < len(args):
+                param = args[i]
+                try:
+                    key, value = param.split('=')
+                    if value.startswith('"') and value.endswith('"'):
+                        value = value[1:-1].replace('_', ' ')
+                        value = value.replace('\\"', '"')
+                    elif '.' in value:
+                        value = float(value)
+                    else:
+                        value = int(value)
+
+                    params[key] = value
+                    i += 1  # Increment to move to the next argument
+                except ValueError:
+                    print(f"Skipping invalid parameter: {param}")
+                    i += 1  # Skip to the next argument
+
             file_storage = FileStorage()
-            new_instance = HBNBCommand.__classes[arg]()
+            new_instance = HBNBCommand.__classes[class_name](**params)
             print(new_instance.id)
             file_storage.new(new_instance)
             file_storage.save()
@@ -148,7 +177,7 @@ class HBNBCommand(cmd.Cmd):
             elif len(args) < 4:
                 print("** value missing **")
             else:
-                instnce_id = args[1]
+                instance_id = args[1]
                 attr_name = args[2]
                 attr_value = args[3]
                 instance = file_storage.all().get(f"{class_name}.{instnce_id}")
